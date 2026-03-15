@@ -69,8 +69,6 @@ if DATABASE_URL:
 else:
     DB_ENGINE = os.environ.get('DB_ENGINE', 'sqlite3')
     if DB_ENGINE == 'mysql':
-        import pymysql
-        pymysql.install_as_MySQLdb()
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.mysql',
