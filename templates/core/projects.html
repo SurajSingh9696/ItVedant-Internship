@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Projects – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">Our Projects</h1>
+        <p class="lead opacity-75 mt-2">Ongoing and completed initiatives creating impact at the grassroots level.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <form method="get" class="row g-3 mb-5 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Category</label>
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    <option value="education" {% if category == 'education' %}selected{% endif %}>Education</option>
+                    <option value="healthcare" {% if category == 'healthcare' %}selected{% endif %}>Healthcare</option>
+                    <option value="livelihood" {% if category == 'livelihood' %}selected{% endif %}>Livelihood</option>
+                    <option value="women" {% if category == 'women' %}selected{% endif %}>Women Empowerment</option>
+                    <option value="environment" {% if category == 'environment' %}selected{% endif %}>Environment</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Status</label>
+                <select name="status" class="form-select">
+                    <option value="">All Status</option>
+                    <option value="ongoing" {% if status == 'ongoing' %}selected{% endif %}>Ongoing</option>
+                    <option value="completed" {% if status == 'completed' %}selected{% endif %}>Completed</option>
+                    <option value="upcoming" {% if status == 'upcoming' %}selected{% endif %}>Upcoming</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-danger w-100">Filter Projects</button>
+            </div>
+        </form>
+
+        {% if projects %}
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm project-card">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" style="height:220px;object-fit:cover;" alt="{{ project.title }}">
+                    {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-secondary bg-opacity-10" style="height:220px;">
+                        <i class="bi bi-folder2-open display-2 text-secondary"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-primary-subtle text-primary">{{ project.get_category_display }}</span>
+                            <span class="badge {% if project.status == 'ongoing' %}bg-success{% elif project.status == 'completed' %}bg-secondary{% else %}bg-warning text-dark{% endif %}">{{ project.get_status_display }}</span>
+                        </div>
+                        <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                        <p class="card-text text-muted small">{{ project.description|truncatewords:25 }}</p>
+                        {% if project.location %}
+                        <p class="small text-muted mb-1"><i class="bi bi-geo-alt text-danger me-1"></i>{{ project.location }}</p>
+                        {% endif %}
+                        {% if project.beneficiaries %}
+                        <p class="small text-muted mb-0"><i class="bi bi-people text-primary me-1"></i>{{ project.beneficiaries }} beneficiaries</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pb-3 d-flex gap-2">
+                        <a href="{% url 'project_detail' project.slug %}" class="btn btn-sm btn-outline-danger">View Details</a>
+                        {% if project.report %}<a href="{{ project.report.url }}" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-file-pdf me-1"></i>Report</a>{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if projects.has_other_pages %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if projects.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ projects.previous_page_number }}&category={{ category }}&status={{ status }}">Previous</a></li>
+                {% endif %}
+                {% for num in projects.paginator.page_range %}
+                <li class="page-item {% if projects.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}&category={{ category }}&status={{ status }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if projects.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ projects.next_page_number }}&category={{ category }}&status={{ status }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-search display-1 text-muted mb-3 d-block"></i>
+            <h4 class="text-muted">No projects found</h4>
+            <p class="text-muted">Try changing the filters above.</p>
+            <a href="{% url 'projects' %}" class="btn btn-outline-danger">Clear Filters</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Manage Users – HopeForward NGO{% endblock %}
+
+{% block content %}
+<section class="py-4 bg-light border-bottom">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h4 class="fw-bold mb-0"><i class="bi bi-people-fill text-danger me-2"></i>Manage Users</h4>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ u.full_name }}</td>
+                                <td>{{ u.email }}</td>
+                                <td><span class="badge bg-secondary">{{ u.get_role_display }}</span></td>
+                                <td><span class="badge {% if u.status == 'active' %}bg-success{% else %}bg-danger{% endif %}">{{ u.get_status_display }}</span></td>
+                                <td><small>{{ u.created_at|date:"M j, Y" }}</small></td>
+                                <td>
+                                    {% if u != user and u.role != 'admin' %}
+                                    <a href="{% url 'toggle_user_status' u.pk %}" class="btn btn-sm {% if u.status == 'active' %}btn-outline-danger{% else %}btn-outline-success{% endif %}">
+                                        {% if u.status == 'active' %}Deactivate{% else %}Activate{% endif %}
+                                    </a>
+                                    {% elif u == user %}
+                                    <span class="text-muted small">You</span>
+                                    {% else %}
+                                    <span class="text-muted small">Protected</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

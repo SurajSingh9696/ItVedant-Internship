@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Media – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">Media Gallery</h1>
+        <p class="lead opacity-75">Photos, videos, press releases, and news coverage of our work.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <ul class="nav nav-tabs mb-4 justify-content-center" id="mediaTab" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#photos-tab"><i class="bi bi-images me-2"></i>Photos</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#videos-tab"><i class="bi bi-play-btn me-2"></i>Videos</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#press-tab"><i class="bi bi-newspaper me-2"></i>Press Releases</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#news-tab"><i class="bi bi-tv me-2"></i>News Coverage</button></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="photos-tab">
+                {% if photos %}
+                <div class="row g-3">
+                    {% for item in photos %}
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="card border-0 shadow-sm overflow-hidden gallery-card">
+                            {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" style="height:200px;object-fit:cover;" alt="{{ item.title }}">
+                            {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-light" style="height:200px;"><i class="bi bi-image display-2 text-muted"></i></div>
+                            {% endif %}
+                            <div class="card-body p-2">
+                                <p class="small text-muted mb-0">{{ item.title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted"><i class="bi bi-images display-1 mb-3 d-block"></i><p>No photos uploaded yet.</p></div>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade" id="videos-tab">
+                {% if videos %}
+                <div class="row g-4">
+                    {% for item in videos %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card border-0 shadow-sm">
+                            {% if item.video_url %}
+                            <div class="ratio ratio-16x9">
+                                <iframe src="{{ item.video_url }}" allowfullscreen class="rounded-top"></iframe>
+                            </div>
+                            {% endif %}
+                            <div class="card-body"><h6 class="fw-bold mb-1">{{ item.title }}</h6><p class="text-muted small mb-0">{{ item.description }}</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted"><i class="bi bi-play-btn display-1 mb-3 d-block"></i><p>No videos uploaded yet.</p></div>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade" id="press-tab">
+                {% if press %}
+                <div class="row g-4">
+                    {% for item in press %}
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3">
+                            <div class="bg-danger text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-newspaper fs-4"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ item.title }}</h6>
+                                <p class="text-muted small mb-1">{{ item.description }}</p>
+                                <small class="text-muted">{{ item.published_at|date:"F j, Y" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted"><i class="bi bi-newspaper display-1 mb-3 d-block"></i><p>No press releases yet.</p></div>
+                {% endif %}
+            </div>
+            <div class="tab-pane fade" id="news-tab">
+                {% if news %}
+                <div class="row g-4">
+                    {% for item in news %}
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-3">
+                            <h6 class="fw-bold mb-1">{{ item.title }}</h6>
+                            <p class="text-muted small mb-2">{{ item.description }}</p>
+                            {% if item.video_url %}<a href="{{ item.video_url }}" target="_blank" class="btn btn-sm btn-outline-danger">View Coverage</a>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted"><i class="bi bi-tv display-1 mb-3 d-block"></i><p>No news coverage added yet.</p></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

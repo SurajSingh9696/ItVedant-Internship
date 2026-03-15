@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}About Us – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">About Us</h1>
+        <nav aria-label="breadcrumb" class="d-flex justify-content-center">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-warning text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active text-white">About Us</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="text-danger fw-semibold">Who We Are</span>
+                <h2 class="fw-bold display-6 mt-1 mb-4">HopeForward NGO</h2>
+                <p class="text-muted">HopeForward is a non-governmental organization dedicated to empowering underprivileged communities across India. Founded with the belief that every person deserves dignity, health, and opportunity, we have been working on the ground to create meaningful change.</p>
+                <p class="text-muted">Our multidisciplinary approach combines education, healthcare, and livelihood programs to address the root causes of poverty and inequality.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-4 bg-danger text-white rounded-4 text-center shadow">
+                            <i class="bi bi-people-fill display-4 mb-2 d-block"></i>
+                            <h3 class="fw-bold mb-0">50,000+</h3>
+                            <small>Beneficiaries</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-4 bg-primary text-white rounded-4 text-center shadow">
+                            <i class="bi bi-geo-alt-fill display-4 mb-2 d-block"></i>
+                            <h3 class="fw-bold mb-0">20+</h3>
+                            <small>Districts</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-4 bg-success text-white rounded-4 text-center shadow">
+                            <i class="bi bi-folder2-open display-4 mb-2 d-block"></i>
+                            <h3 class="fw-bold mb-0">120+</h3>
+                            <small>Projects</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-4 bg-warning text-dark rounded-4 text-center shadow">
+                            <i class="bi bi-person-heart display-4 mb-2 d-block"></i>
+                            <h3 class="fw-bold mb-0">500+</h3>
+                            <small>Volunteers</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <i class="bi bi-bullseye display-3 text-danger mb-3 d-block"></i>
+                    <h4 class="fw-bold">Our Mission</h4>
+                    <p class="text-muted">To create a lasting impact in the lives of underprivileged children and communities by providing education, women empowerment, and livelihood opportunities.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <i class="bi bi-eye-fill display-3 text-primary mb-3 d-block"></i>
+                    <h4 class="fw-bold">Our Vision</h4>
+                    <p class="text-muted">A world where every child has access to quality education, healthcare, and the opportunity to achieve their full potential in a just and equitable society.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <i class="bi bi-hand-thumbs-up-fill display-3 text-success mb-3 d-block"></i>
+                    <h4 class="fw-bold">Our Values</h4>
+                    <p class="text-muted">Integrity, transparency, compassion, and accountability guide every action we take and every rupee we spend in service of our mission.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="text-danger fw-semibold">Our Journey</span>
+            <h2 class="fw-bold display-6 mt-1">Key Milestones</h2>
+        </div>
+        <div class="timeline">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card border-start border-danger border-4 shadow-sm p-3">
+                        <h6 class="text-danger fw-bold">2010 – Founded</h6>
+                        <p class="text-muted mb-0 small">HopeForward was established with a small team of 5 volunteers in Mumbai, starting with a literacy program for 100 children.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-start border-primary border-4 shadow-sm p-3">
+                        <h6 class="text-primary fw-bold">2013 – Healthcare Expansion</h6>
+                        <p class="text-muted mb-0 small">Launched our first mobile health unit, bringing medical care to 10 remote villages in Maharashtra.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-start border-success border-4 shadow-sm p-3">
+                        <h6 class="text-success fw-bold">2016 – Livelihood Program</h6>
+                        <p class="text-muted mb-0 small">Started vocational training centres for women, training over 2,000 women in marketable skills annually.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-start border-warning border-4 shadow-sm p-3">
+                        <h6 class="text-warning fw-bold">2020 – COVID Relief</h6>
+                        <p class="text-muted mb-0 small">Distributed relief kits to over 10,000 families during the pandemic and launched online education resources.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-start border-info border-4 shadow-sm p-3">
+                        <h6 class="text-info fw-bold">2022 – 50K Milestone</h6>
+                        <p class="text-muted mb-0 small">Reached the milestone of impacting 50,000 lives across 20 districts in 5 states.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-start border-danger border-4 shadow-sm p-3">
+                        <h6 class="text-danger fw-bold">2024 – Digital Platform</h6>
+                        <p class="text-muted mb-0 small">Launched our digital CMS platform to improve transparency, engagement, and donor trust.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-danger text-white text-center">
+    <div class="container py-3">
+        <h2 class="fw-bold mb-3">Be Part of Our Story</h2>
+        <p class="lead opacity-75 mb-4">Join thousands of supporters who are helping us change lives.</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{% url 'donate' %}" class="btn btn-light text-danger fw-bold px-4">Donate</a>
+            <a href="{% url 'volunteer' %}" class="btn btn-outline-light px-4">Volunteer</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

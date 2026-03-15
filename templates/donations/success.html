@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Thank You! – HopeForward NGO{% endblock %}
+
+{% block content %}
+<section class="d-flex align-items-center justify-content-center py-5" style="min-height:80vh;">
+    <div class="container text-center">
+        <div class="card border-0 shadow-lg p-5 mx-auto" style="max-width:560px;">
+            <i class="bi bi-check-circle-fill text-success display-1 mb-3 d-block"></i>
+            <h2 class="fw-bold">Thank You, {{ donation.donor_name }}!</h2>
+            <p class="text-muted mb-4">Your donation of <strong class="text-danger fs-5">₹{{ donation.amount }}</strong> has been received. Every contribution makes a real difference.</p>
+            <div class="bg-light rounded-3 p-3 text-start mb-4">
+                <div class="row g-2 small">
+                    <div class="col-6 text-muted">Transaction ID:</div>
+                    <div class="col-6 fw-semibold text-break">{{ donation.transaction_id }}</div>
+                    <div class="col-6 text-muted">Date:</div>
+                    <div class="col-6">{{ donation.created_at|date:"F j, Y H:i" }}</div>
+                    <div class="col-6 text-muted">Status:</div>
+                    <div class="col-6"><span class="badge bg-success">{{ donation.get_status_display }}</span></div>
+                    {% if donation.project %}
+                    <div class="col-6 text-muted">Project:</div>
+                    <div class="col-6">{{ donation.project.title }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            <p class="text-muted small mb-4">A confirmation email has been sent to <strong>{{ donation.donor_email }}</strong>. An 80G tax certificate will follow within 7 working days.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'home' %}" class="btn btn-danger px-4">Back to Home</a>
+                <a href="{% url 'our_work' %}" class="btn btn-outline-danger px-4">Our Work</a>
+            </div>
+            <div class="mt-4 pt-3 border-top">
+                <p class="text-muted small mb-2">Share your support:</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="btn btn-sm btn-outline-secondary"><i class="bi bi-facebook me-1"></i>Facebook</a>
+                    <a href="#" class="btn btn-sm btn-outline-secondary"><i class="bi bi-twitter-x me-1"></i>Twitter</a>
+                    <a href="#" class="btn btn-sm btn-outline-secondary"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

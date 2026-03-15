@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}{{ project.title }} – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-4">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-warning text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'projects' %}" class="text-warning text-decoration-none">Projects</a></li>
+                <li class="breadcrumb-item active text-white">{{ project.title|truncatewords:5 }}</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-8">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="img-fluid rounded-4 mb-4 w-100" style="height:400px;object-fit:cover;" alt="{{ project.title }}">
+                {% endif %}
+                <div class="d-flex gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary fs-6">{{ project.get_category_display }}</span>
+                    <span class="badge {% if project.status == 'ongoing' %}bg-success{% elif project.status == 'completed' %}bg-secondary{% else %}bg-warning text-dark{% endif %} fs-6">{{ project.get_status_display }}</span>
+                </div>
+                <h1 class="fw-bold display-6 mb-4">{{ project.title }}</h1>
+                <div class="text-muted">{{ project.description|linebreaks }}</div>
+                {% if project.goals %}
+                <div class="mt-4">
+                    <h5 class="fw-bold">Project Goals</h5>
+                    <div class="text-muted">{{ project.goals|linebreaks }}</div>
+                </div>
+                {% endif %}
+                {% if project.report %}
+                <div class="mt-4">
+                    <a href="{{ project.report.url }}" target="_blank" class="btn btn-outline-danger">
+                        <i class="bi bi-file-pdf me-2"></i>Download Full Report
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm p-4 sticky-top" style="top:80px;">
+                    <h5 class="fw-bold border-bottom pb-3 mb-3">Project Details</h5>
+                    {% if project.location %}
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-semibold">Location</small>
+                        <p class="mb-0 d-flex gap-2 align-items-center"><i class="bi bi-geo-alt-fill text-danger"></i>{{ project.location }}</p>
+                    </div>
+                    {% endif %}
+                    {% if project.beneficiaries %}
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-semibold">Beneficiaries</small>
+                        <p class="mb-0 d-flex gap-2 align-items-center"><i class="bi bi-people-fill text-primary"></i>{{ project.beneficiaries|floatformat:"0" }}</p>
+                    </div>
+                    {% endif %}
+                    {% if project.start_date %}
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-semibold">Timeline</small>
+                        <p class="mb-0 d-flex gap-2 align-items-center"><i class="bi bi-calendar3 text-success"></i>{{ project.start_date }} {% if project.end_date %}– {{ project.end_date }}{% endif %}</p>
+                    </div>
+                    {% endif %}
+                    <div class="mt-4 pt-3 border-top">
+                        <p class="text-muted small">Support this project with a donation.</p>
+                        <a href="{% url 'donate' %}?project={{ project.pk }}" class="btn btn-danger w-100">
+                            <i class="bi bi-heart-fill me-2"></i>Support This Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

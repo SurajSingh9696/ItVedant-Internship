@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard – HopeForward NGO{% endblock %}
+
+{% block content %}
+<section class="py-4 bg-light border-bottom">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="fw-bold mb-0">Dashboard</h4>
+            <small class="text-muted">Welcome back, {{ user.full_name }} <span class="badge bg-danger ms-1">{{ user.get_role_display }}</span></small>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-person me-1"></i>Profile</a>
+            {% if user.role == 'admin' %}
+            <a href="/admin/" class="btn btn-outline-dark btn-sm"><i class="bi bi-gear me-1"></i>Admin Panel</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right me-1"></i>Logout</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4 border-start border-danger border-4">
+                    <i class="bi bi-people-fill text-danger display-5 mb-2 d-block"></i>
+                    <h3 class="fw-bold mb-0">{{ total_users }}</h3>
+                    <small class="text-muted">Total Users</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4 border-start border-success border-4">
+                    <i class="bi bi-cash-coin text-success display-5 mb-2 d-block"></i>
+                    <h3 class="fw-bold mb-0">{{ total_donations }}</h3>
+                    <small class="text-muted">Donations</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4 border-start border-primary border-4">
+                    <i class="bi bi-person-heart text-primary display-5 mb-2 d-block"></i>
+                    <h3 class="fw-bold mb-0">{{ total_volunteers }}</h3>
+                    <small class="text-muted">Volunteers</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card border-0 shadow-sm text-center p-4 border-start border-warning border-4">
+                    <i class="bi bi-folder2-open text-warning display-5 mb-2 d-block"></i>
+                    <h3 class="fw-bold mb-0">{{ total_projects }}</h3>
+                    <small class="text-muted">Projects</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-bottom fw-bold py-3">
+                        <i class="bi bi-clock-history me-2 text-danger"></i>Recent Donations
+                    </div>
+                    <div class="card-body p-0">
+                        {% if recent_donations %}
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Donor</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for donation in recent_donations %}
+                                    <tr>
+                                        <td>{{ donation.donor_name }}<br><small class="text-muted">{{ donation.donor_email }}</small></td>
+                                        <td><strong>₹{{ donation.amount }}</strong></td>
+                                        <td><span class="badge {% if donation.status == 'completed' %}bg-success{% elif donation.status == 'pending' %}bg-warning text-dark{% else %}bg-danger{% endif %}">{{ donation.get_status_display }}</span></td>
+                                        <td><small class="text-muted">{{ donation.created_at|date:"M j, Y" }}</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-4 text-muted"><i class="bi bi-inbox display-4 mb-2 d-block"></i>No donations yet.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-bottom fw-bold py-3">
+                        <i class="bi bi-person-heart me-2 text-primary"></i>Recent Volunteers
+                    </div>
+                    <div class="card-body p-0">
+                        {% if recent_volunteers %}
+                        <ul class="list-group list-group-flush">
+                            {% for v in recent_volunteers %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong class="d-block">{{ v.full_name }}</strong>
+                                    <small class="text-muted">{{ v.city }} · {{ v.get_availability_display }}</small>
+                                </div>
+                                <span class="badge {% if v.is_approved %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                                    {% if v.is_approved %}Approved{% else %}Pending{% endif %}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <div class="text-center py-4 text-muted"><i class="bi bi-inbox display-4 mb-2 d-block"></i>No volunteers yet.</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-header bg-transparent border-bottom fw-bold py-3">Quick Actions</div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            {% if user.role == 'admin' %}
+                            <a href="/admin/core/project/add/" class="btn btn-outline-danger btn-sm"><i class="bi bi-plus-circle me-2"></i>Add Project</a>
+                            <a href="/admin/core/blogpost/add/" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil me-2"></i>Write Blog Post</a>
+                            <a href="{% url 'manage_users' %}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-people me-2"></i>Manage Users</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

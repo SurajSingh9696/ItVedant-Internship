@@ -1,0 +1,9 @@
+django>=5.0
+pymysql
+pillow
+python-dotenv
+razorpay
+gunicorn
+whitenoise
+dj-database-url
+psycopg2-binary

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}Donate – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <i class="bi bi-heart-fill text-danger display-4 mb-3 d-block"></i>
+        <h1 class="display-5 fw-bold">Make a Donation</h1>
+        <p class="lead opacity-75">Your generosity changes lives. Every rupee you donate reaches those who need it most.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm p-4">
+                    <h4 class="fw-bold mb-1">Choose Your Donation Amount</h4>
+                    <p class="text-muted small mb-4">Select a preset amount or enter a custom amount below.</p>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-4"><button type="button" class="btn btn-outline-danger w-100 amount-btn" data-amount="500">₹500</button></div>
+                        <div class="col-4"><button type="button" class="btn btn-outline-danger w-100 amount-btn" data-amount="1000">₹1,000</button></div>
+                        <div class="col-4"><button type="button" class="btn btn-outline-danger w-100 amount-btn" data-amount="2500">₹2,500</button></div>
+                        <div class="col-4"><button type="button" class="btn btn-outline-danger w-100 amount-btn" data-amount="5000">₹5,000</button></div>
+                        <div class="col-4"><button type="button" class="btn btn-outline-danger w-100 amount-btn" data-amount="10000">₹10,000</button></div>
+                        <div class="col-4"><button type="button" class="btn btn-outline-secondary w-100 amount-btn" data-amount="custom">Other</button></div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                                {{ form.donor_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                                {{ form.donor_email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                {{ form.donor_phone }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Amount (₹) <span class="text-danger">*</span></label>
+                                {{ form.amount }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Donation Type</label>
+                                {{ form.payment_type }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Support a Specific Project</label>
+                                {{ form.project }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Message (Optional)</label>
+                                {{ form.message }}
+                            </div>
+                        </div>
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger mt-3 py-2 small">{{ form.non_field_errors.0 }}</div>
+                        {% endif %}
+                        <div class="mt-4 p-3 bg-light rounded-3">
+                            <p class="small text-muted mb-1"><i class="bi bi-shield-check text-success me-2"></i>Your payment is secured using industry-standard encryption.</p>
+                            <p class="small text-muted mb-0"><i class="bi bi-receipt text-success me-2"></i>You will receive a donation receipt via email after the transaction.</p>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-lg w-100 mt-4 fw-bold">
+                            <i class="bi bi-heart-fill me-2"></i>Proceed to Donate
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card border-0 bg-danger text-white p-4 mb-4">
+                    <h5 class="fw-bold mb-3">What Your Donation Does</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex gap-2"><i class="bi bi-check-circle-fill flex-shrink-0 mt-1"></i><span><strong>₹500</strong> – Provides school supplies for 2 children for a month.</span></li>
+                        <li class="mb-3 d-flex gap-2"><i class="bi bi-check-circle-fill flex-shrink-0 mt-1"></i><span><strong>₹1,000</strong> – Funds a health check-up for 5 community members.</span></li>
+                        <li class="mb-3 d-flex gap-2"><i class="bi bi-check-circle-fill flex-shrink-0 mt-1"></i><span><strong>₹2,500</strong> – Supports one week of vocational training for a woman.</span></li>
+                        <li class="mb-3 d-flex gap-2"><i class="bi bi-check-circle-fill flex-shrink-0 mt-1"></i><span><strong>₹5,000</strong> – Covers monthly stipend for a community teacher.</span></li>
+                        <li class="d-flex gap-2"><i class="bi bi-check-circle-fill flex-shrink-0 mt-1"></i><span><strong>₹10,000+</strong> – Sponsors an entire education project for a term.</span></li>
+                    </ul>
+                </div>
+                <div class="card border-0 shadow-sm p-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-award-fill text-warning me-2"></i>Tax Benefits</h6>
+                    <p class="text-muted small">Donations to HopeForward NGO are eligible for 80G tax deductions under the Income Tax Act. You will receive an 80G certificate via email within 7 working days.</p>
+                </div>
+                <div class="card border-0 shadow-sm p-4 mt-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-shield-fill-check text-success me-2"></i>Secure Payment</h6>
+                    <p class="text-muted small">We accept all major payment methods including UPI, Net Banking, Debit/Credit Cards, and Wallets through Razorpay's secure payment gateway.</p>
+                    <div class="d-flex gap-2 flex-wrap mt-2">
+                        <span class="badge bg-light text-dark border">UPI</span>
+                        <span class="badge bg-light text-dark border">Net Banking</span>
+                        <span class="badge bg-light text-dark border">Visa / Mastercard</span>
+                        <span class="badge bg-light text-dark border">Wallets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.amount-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('btn-danger', 'text-white'));
+        this.classList.add('btn-danger', 'text-white');
+        var amount = this.getAttribute('data-amount');
+        if (amount !== 'custom') {
+            document.getElementById('id_amount').value = amount;
+        } else {
+            document.getElementById('id_amount').value = '';
+            document.getElementById('id_amount').focus();
+        }
+    });
+});
+</script>
+{% endblock %}

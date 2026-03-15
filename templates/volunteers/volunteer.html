@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Volunteer – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <i class="bi bi-person-heart text-danger display-4 mb-3 d-block"></i>
+        <h1 class="display-5 fw-bold">Become a Volunteer</h1>
+        <p class="lead opacity-75">Join our community of change-makers and make a direct impact on people's lives.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm p-4">
+                    <h4 class="fw-bold mb-1">Volunteer Application Form</h4>
+                    <p class="text-muted small mb-4">Fill out the form below and we will reach out to onboard you.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                                {{ form.full_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                {{ form.phone }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">City / Location</label>
+                                {{ form.city }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Availability</label>
+                                {{ form.availability }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Program Interest</label>
+                                {{ form.program_interest }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Skills & Expertise</label>
+                                {{ form.skills }}
+                                <small class="form-text text-muted">e.g. Teaching, Medical, IT, Accounting, Photography</small>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Why do you want to volunteer?</label>
+                                {{ form.motivation }}
+                            </div>
+                        </div>
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger mt-3 py-2 small">{{ form.non_field_errors.0 }}</div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-danger btn-lg w-100 mt-4 fw-bold">
+                            <i class="bi bi-person-check me-2"></i>Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <h4 class="fw-bold mb-4">Why Volunteer With Us?</h4>
+                <div class="d-flex gap-3 mb-4">
+                    <i class="bi bi-heart-fill text-danger fs-4 flex-shrink-0 mt-1"></i>
+                    <div><strong>Direct Impact</strong><p class="text-muted small mb-0">Work directly with communities, see the change you create, and build meaningful relationships.</p></div>
+                </div>
+                <div class="d-flex gap-3 mb-4">
+                    <i class="bi bi-people-fill text-primary fs-4 flex-shrink-0 mt-1"></i>
+                    <div><strong>Supportive Community</strong><p class="text-muted small mb-0">Join a network of passionate individuals dedicated to creating a more equitable world.</p></div>
+                </div>
+                <div class="d-flex gap-3 mb-4">
+                    <i class="bi bi-graph-up-arrow text-success fs-4 flex-shrink-0 mt-1"></i>
+                    <div><strong>Skill Development</strong><p class="text-muted small mb-0">Gain experience in project management, communication, and social development.</p></div>
+                </div>
+                <div class="d-flex gap-3 mb-4">
+                    <i class="bi bi-award-fill text-warning fs-4 flex-shrink-0 mt-1"></i>
+                    <div><strong>Certificates & Recognition</strong><p class="text-muted small mb-0">Receive a volunteer certificate and letter of recommendation after 3+ months of service.</p></div>
+                </div>
+                <div class="card bg-danger text-white p-4 mt-4">
+                    <h6 class="fw-bold mb-2">Already involved?</h6>
+                    <p class="small opacity-75 mb-3">Help us spread the word about our volunteer program among your network!</p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-sm btn-light text-danger fw-semibold"><i class="bi bi-share me-1"></i>Share</a>
+                        <a href="{% url 'donate' %}" class="btn btn-sm btn-outline-light">Donate Instead</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

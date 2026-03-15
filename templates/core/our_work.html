@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Our Work – HopeForward NGO{% endblock %}
+
+{% block content %}
+
+<section class="page-hero bg-dark text-white py-5 text-center">
+    <div class="container py-4">
+        <h1 class="display-5 fw-bold">Our Work</h1>
+        <p class="lead opacity-75 mt-2">Driving change through targeted programs in education, healthcare, and livelihood.</p>
+    </div>
+</section>
+
+<section class="py-5" id="education">
+    <div class="container">
+        <div class="row align-items-center g-5 mb-5">
+            <div class="col-lg-6">
+                <span class="text-primary fw-semibold"><i class="bi bi-book-fill me-2"></i>Education Programs</span>
+                <h2 class="fw-bold display-6 mt-1 mb-4">Educating the Next Generation</h2>
+                <p class="text-muted">We believe education is the most powerful tool to break the cycle of poverty. Our education programs reach out to underprivileged children, providing them with quality learning resources, trained teachers, and a safe learning environment.</p>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>After-school tutoring centers in rural areas</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Scholarship programs for bright students</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>Digital literacy for children and women</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-primary me-2"></i>School infrastructure support and supplies</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    {% for program in education %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-primary text-white rounded-3 p-3 flex-shrink-0">
+                                <i class="bi bi-book fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ program.title }}</h6>
+                                <p class="text-muted mb-1 small">{{ program.description|truncatewords:20 }}</p>
+                                {% if program.impact_count %}<span class="badge bg-primary-subtle text-primary">{{ program.impact_count }} beneficiaries</span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-primary text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-book fs-4"></i></div>
+                            <div><h6 class="fw-bold mb-1">Rural Education Centers</h6><p class="text-muted mb-0 small">Providing quality education to 15,000+ children in rural Maharashtra and UP through 45 learning centers.</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row align-items-center g-5 mb-5 flex-row-reverse" id="healthcare">
+            <div class="col-lg-6">
+                <span class="text-danger fw-semibold"><i class="bi bi-heart-pulse-fill me-2"></i>Healthcare Initiatives</span>
+                <h2 class="fw-bold display-6 mt-1 mb-4">Healthcare for All</h2>
+                <p class="text-muted">Our healthcare programs bring critical medical services to communities that lack access to hospitals and clinics. From mobile health units to regular health camps, we ensure no one is left without care.</p>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i>Mobile health units visiting 50+ villages monthly</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i>Free eye check-up and spectacle distribution</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i>Maternal and child health programs</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-danger me-2"></i>Mental health awareness and counseling</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    {% for program in healthcare %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-danger text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-heart-pulse fs-4"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ program.title }}</h6>
+                                <p class="text-muted mb-1 small">{{ program.description|truncatewords:20 }}</p>
+                                {% if program.impact_count %}<span class="badge bg-danger-subtle text-danger">{{ program.impact_count }} beneficiaries</span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-danger text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-heart-pulse fs-4"></i></div>
+                            <div><h6 class="fw-bold mb-1">Mobile Health Units</h6><p class="text-muted mb-0 small">Our fleet of 5 mobile health units provides free primary healthcare to families in remote areas.</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row align-items-center g-5" id="livelihood">
+            <div class="col-lg-6">
+                <span class="text-success fw-semibold"><i class="bi bi-briefcase-fill me-2"></i>Livelihood Programs</span>
+                <h2 class="fw-bold display-6 mt-1 mb-4">Empowering Through Skills</h2>
+                <p class="text-muted">Sustainable livelihoods give families the means to support themselves and their children's futures. Our vocational training and income-generation programs equip marginalized communities with practical skills.</p>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Tailoring, handicrafts, and artisan training</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Organic farming and agricultural support</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Microfinance linkages for self-help groups</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Computer and digital skills for employment</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    {% for program in livelihood %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-success text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-briefcase fs-4"></i></div>
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ program.title }}</h6>
+                                <p class="text-muted mb-1 small">{{ program.description|truncatewords:20 }}</p>
+                                {% if program.impact_count %}<span class="badge bg-success-subtle text-success">{{ program.impact_count }} beneficiaries</span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm p-3 d-flex flex-row gap-3 align-items-start">
+                            <div class="bg-success text-white rounded-3 p-3 flex-shrink-0"><i class="bi bi-briefcase fs-4"></i></div>
+                            <div><h6 class="fw-bold mb-1">Women Vocational Training</h6><p class="text-muted mb-0 small">Training women in tailoring, handicrafts, and digital skills to create sustainable income sources.</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
