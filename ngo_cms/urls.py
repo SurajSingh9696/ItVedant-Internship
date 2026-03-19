@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('accounts/', include('accounts.urls')),
     path('donate/', include('donations.urls')),
+    path('api/', include('ngo_cms.api_urls')),
     path('', include('volunteers.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -3,7 +3,12 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import send_mail
+from django.conf import settings
 from .forms import RegistrationForm, LoginForm, CustomPasswordResetForm, CustomSetPasswordForm
 
 User = get_user_model()
@@ -16,8 +21,21 @@ def register_view(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, 'Account created! Please log in.')
-            return redirect('login')
+            user.is_email_verified = False
+            user.is_active = False
+            user.save(update_fields=['is_email_verified', 'is_active'])
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            verify_link = request.build_absolute_uri(reverse('verify_email', args=[uid, token]))
+            send_mail(
+                'Verify your email - HopeForward NGO',
+                f'Hi {user.full_name},\n\nPlease verify your email to activate your account:\n{verify_link}\n\nIf you did not register, please ignore this message.',
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=True,
+            )
+            messages.success(request, 'Account created. Please verify your email before login.')
+            return redirect('verify_email_sent')
     else:
         form = RegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -30,6 +48,9 @@ def login_view(request):
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
+            if not user.is_email_verified and user.role != 'admin':
+                messages.error(request, 'Please verify your email before logging in.')
+                return redirect('login')
             if user.role == 'admin' and (not user.is_staff or not user.is_superuser):
                 user.is_staff = True
                 user.is_superuser = True
@@ -100,6 +121,26 @@ def toggle_user_status(request, pk):
     user.save()
     messages.success(request, f'User status updated.')
     return redirect('manage_users')
+
+
+def verify_email_sent_view(request):
+    return render(request, 'accounts/verify_email_sent.html')
+
+
+def verify_email_view(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except Exception:
+        user = None
+
+    if user and default_token_generator.check_token(user, token):
+        user.is_email_verified = True
+        user.is_active = True
+        user.save(update_fields=['is_email_verified', 'is_active'])
+        return render(request, 'accounts/verify_email_result.html', {'verified': True})
+
+    return render(request, 'accounts/verify_email_result.html', {'verified': False})
 
 
 class CustomPasswordResetView(PasswordResetView):

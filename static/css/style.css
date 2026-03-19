@@ -7,6 +7,7 @@ body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     color: #333;
     scroll-behavior: smooth;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 
 .navbar .nav-link {
@@ -71,6 +72,7 @@ footer a:hover {
 .btn {
     border-radius: 6px;
     font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-danger {
@@ -83,7 +85,27 @@ footer a:hover {
     border-color: #a52834;
 }
 
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
 .card {
+    border-radius: 12px;
+}
+
+.reveal-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.table-responsive {
     border-radius: 12px;
 }
 
@@ -98,6 +120,15 @@ table th {
     .hero-section h1 {
         font-size: 2.2rem;
     }
+
+    .page-hero .lead {
+        font-size: 1rem;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
     .stat-item {
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);

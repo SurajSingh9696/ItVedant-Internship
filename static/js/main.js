@@ -28,4 +28,28 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.gallery-card img').forEach(function (img) {
         img.style.cursor = 'zoom-in';
     });
+
+    var revealTargets = document.querySelectorAll('.card, .page-hero .container > *, .table-responsive');
+    revealTargets.forEach(function (el) {
+        el.classList.add('reveal-item');
+    });
+
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+
+        revealTargets.forEach(function (el) {
+            observer.observe(el);
+        });
+    } else {
+        revealTargets.forEach(function (el) {
+            el.classList.add('is-visible');
+        });
+    }
 });

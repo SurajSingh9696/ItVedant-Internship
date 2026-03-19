@@ -1,4 +1,5 @@
 django>=5.0
+djangorestframework
 mysqlclient>=2.2.1
 pillow
 python-dotenv

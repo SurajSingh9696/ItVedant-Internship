@@ -5,11 +5,12 @@ A Django-based NGO Content Management System with role-based access, donation ma
 ## Features
 
 - Role-based user system: admin, editor, viewer
-- Login, registration, session management, password reset
+- Login, registration, email verification, session management, password reset
 - NGO pages: home, about, work, projects, media, blog, contact
 - Donation flow with Razorpay integration and payment verification
 - Volunteer form and newsletter subscription
 - Admin dashboard with recent activity
+- RESTful API endpoints for content management, form submissions, and donation data
 
 ## Tech Stack
 
@@ -24,6 +25,28 @@ A Django-based NGO Content Management System with role-based access, donation ma
 - core: CMS pages, projects, blogs, events, media
 - donations: donation forms and payment flow
 - volunteers: volunteer and newsletter modules
+
+## REST API
+
+Base path: /api/
+
+- /api/users/
+- /api/programs/
+- /api/projects/
+- /api/blog-posts/
+- /api/media-items/
+- /api/statistics/
+- /api/contacts/
+- /api/events/
+- /api/donations/
+- /api/volunteers/
+- /api/newsletter/
+
+Permission behavior:
+
+- Public create access for contact, donation, volunteer, newsletter form APIs
+- Admin and editor access for content management writes
+- Admin-only access for user management API
 
 ## Local Setup
 
