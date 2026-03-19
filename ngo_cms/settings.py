@@ -1,7 +1,11 @@
 from pathlib import Path
 import os
 import dj_database_url
+import pymysql
 from dotenv import load_dotenv
+
+pymysql.version_info = (2, 2, 1, 'final', 0)
+pymysql.install_as_MySQLdb()
 
 load_dotenv()
 

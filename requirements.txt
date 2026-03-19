@@ -1,6 +1,6 @@
 django>=5.0
 djangorestframework
-mysqlclient>=2.2.1
+pymysql>=1.1.1
 pillow
 python-dotenv
 razorpay
