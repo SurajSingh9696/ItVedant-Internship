@@ -26,6 +26,11 @@ if VERCEL_URL:
 if IS_VERCEL:
     ALLOWED_HOSTS.append('.vercel.app')
 ALLOWED_HOSTS = [host for host in dict.fromkeys(ALLOWED_HOSTS) if host]
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://*.vercel.app,https://localhost,https://127.0.0.1'
+).split(',')
+CSRF_TRUSTED_ORIGINS = [origin for origin in dict.fromkeys(CSRF_TRUSTED_ORIGINS) if origin]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -99,6 +104,14 @@ else:
                 'NAME': BASE_DIR / 'db.sqlite3',
             }
         }
+
+if IS_VERCEL and not DATABASE_URL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': '/tmp/db.sqlite3',
+        }
+    }
 
 AUTH_USER_MODEL = 'accounts.User'
 
