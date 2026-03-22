@@ -10,5 +10,7 @@ django.setup()
 
 if os.environ.get('VERCEL_AUTO_MIGRATE', '1') == '1':
     call_command('migrate', interactive=False, run_syncdb=True, verbosity=0)
+if os.environ.get('VERCEL_COLLECTSTATIC', '1') == '1':
+    call_command('collectstatic', interactive=False, verbosity=0)
 
 app = get_wsgi_application()
