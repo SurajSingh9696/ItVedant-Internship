@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.utils import OperationalError, ProgrammingError
 from .models import (
     Program, Project, BlogPost, MediaGallery, Statistic, ContactMessage, Event,
     Banner, VisionMission, Initiative, Story, CoreValue, TeamMember,
@@ -9,15 +10,29 @@ from .models import (
 from .forms import ContactForm
 
 
+def _safe_list(queryset):
+    try:
+        return list(queryset)
+    except (ProgrammingError, OperationalError):
+        return []
+
+
+def _safe_first(queryset):
+    try:
+        return queryset.first()
+    except (ProgrammingError, OperationalError):
+        return None
+
+
 def home_view(request):
-    banners = Banner.objects.filter(is_active=True).order_by('order')
-    featured_programs = Program.objects.filter(is_featured=True)[:3]
-    recent_projects = Project.objects.filter(status='ongoing')[:4]
-    stats = Statistic.objects.all()
-    recent_blogs = BlogPost.objects.filter(is_published=True)[:3]
-    featured_initiatives = Initiative.objects.filter(is_featured=True).order_by('order')[:3]
-    featured_stories = Story.objects.filter(is_featured=True).order_by('-published_at')[:2]
-    vision_mission = VisionMission.objects.first()
+    banners = _safe_list(Banner.objects.filter(is_active=True).order_by('order'))
+    featured_programs = _safe_list(Program.objects.filter(is_featured=True)[:3])
+    recent_projects = _safe_list(Project.objects.filter(status='ongoing')[:4])
+    stats = _safe_list(Statistic.objects.all())
+    recent_blogs = _safe_list(BlogPost.objects.filter(is_published=True)[:3])
+    featured_initiatives = _safe_list(Initiative.objects.filter(is_featured=True).order_by('order')[:3])
+    featured_stories = _safe_list(Story.objects.filter(is_featured=True).order_by('-published_at')[:2])
+    vision_mission = _safe_first(VisionMission.objects.all())
     context = {
         'banners': banners,
         'featured_programs': featured_programs,
@@ -32,13 +47,13 @@ def home_view(request):
 
 
 def about_view(request):
-    vision_mission = VisionMission.objects.first()
-    our_story = OurStory.objects.first()
-    core_values = CoreValue.objects.all().order_by('order')
-    team_members = TeamMember.objects.filter(is_active=True).order_by('order')
-    programs = Program.objects.all().order_by('-created_at')[:6]
-    stats = Statistic.objects.all().order_by('order')[:4]
-    featured_stories = Story.objects.filter(is_featured=True).order_by('-published_at')[:3]
+    vision_mission = _safe_first(VisionMission.objects.all())
+    our_story = _safe_first(OurStory.objects.all())
+    core_values = _safe_list(CoreValue.objects.all().order_by('order'))
+    team_members = _safe_list(TeamMember.objects.filter(is_active=True).order_by('order'))
+    programs = _safe_list(Program.objects.all().order_by('-created_at')[:6])
+    stats = _safe_list(Statistic.objects.all().order_by('order')[:4])
+    featured_stories = _safe_list(Story.objects.filter(is_featured=True).order_by('-published_at')[:3])
     context = {
         'vision_mission': vision_mission,
         'our_story': our_story,
@@ -52,9 +67,9 @@ def about_view(request):
 
 
 def our_work_view(request):
-    education = Program.objects.filter(category='education')
-    healthcare = Program.objects.filter(category='healthcare')
-    livelihood = Program.objects.filter(category='livelihood')
+    education = _safe_list(Program.objects.filter(category='education'))
+    healthcare = _safe_list(Program.objects.filter(category='healthcare'))
+    livelihood = _safe_list(Program.objects.filter(category='livelihood'))
     context = {
         'education': education,
         'healthcare': healthcare,
@@ -99,11 +114,11 @@ def project_detail_view(request, slug):
 
 
 def media_view(request):
-    images = ImageGallery.objects.all().order_by('-uploaded_at')
-    videos = VideoGallery.objects.all().order_by('-uploaded_at')
-    press_releases = PressRelease.objects.all().order_by('-published_date')
-    media_coverage = MediaCoverage.objects.all().order_by('-published_date')
-    media_contacts = MediaContact.objects.filter(is_active=True).order_by('name')
+    images = _safe_list(ImageGallery.objects.all().order_by('-uploaded_at'))
+    videos = _safe_list(VideoGallery.objects.all().order_by('-uploaded_at'))
+    press_releases = _safe_list(PressRelease.objects.all().order_by('-published_date'))
+    media_coverage = _safe_list(MediaCoverage.objects.all().order_by('-published_date'))
+    media_contacts = _safe_list(MediaContact.objects.filter(is_active=True).order_by('name'))
     context = {
         'images': images,
         'videos': videos,
