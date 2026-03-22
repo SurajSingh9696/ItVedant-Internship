@@ -117,8 +117,18 @@ table th {
 }
 
 @media (max-width: 768px) {
+    .hero-section {
+        background-attachment: scroll;
+        min-height: 62vh !important;
+    }
+
     .hero-section h1 {
-        font-size: 2.2rem;
+        font-size: 1.9rem;
+        line-height: 1.25;
+    }
+
+    .hero-section .lead {
+        font-size: 0.98rem;
     }
 
     .page-hero .lead {
@@ -132,5 +142,71 @@ table th {
     .stat-item {
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navbar .btn {
+        width: 100%;
+        margin-top: 0.4rem;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 12%;
+    }
+
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        justify-content: flex-start !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-tabs .nav-item {
+        flex: 0 0 auto;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 0.92rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .sticky-top {
+        position: static !important;
+        top: auto !important;
+    }
+
+    .card-img-top {
+        height: 180px !important;
+        object-fit: cover;
+    }
+
+    .rounded-circle[style*="width:92px"],
+    .rounded-circle[style*="width:96px"] {
+        width: 72px !important;
+        height: 72px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding-left: 0.9rem;
+        padding-right: 0.9rem;
+    }
+
+    h1.display-4,
+    h1.display-5,
+    h1.display-6 {
+        font-size: 1.75rem;
+    }
+
+    .display-6 {
+        font-size: 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.65rem 1rem;
+        font-size: 0.95rem;
     }
 }
