@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.utils import OperationalError, ProgrammingError
+from django.utils import timezone
 from .models import (
     Program, Project, BlogPost, MediaGallery, Statistic, ContactMessage, Event,
     Banner, VisionMission, Initiative, Story, CoreValue, TeamMember,
-    ImageGallery, VideoGallery, PressRelease, MediaCoverage, OurStory, MediaContact
+    ImageGallery, VideoGallery, PressRelease, MediaCoverage, OurStory, MediaContact, Supporter
 )
 from .forms import ContactForm
 
@@ -33,6 +34,10 @@ def home_view(request):
     featured_initiatives = _safe_list(Initiative.objects.filter(is_featured=True).order_by('order')[:3])
     featured_stories = _safe_list(Story.objects.filter(is_featured=True).order_by('-published_at')[:2])
     vision_mission = _safe_first(VisionMission.objects.all())
+    upcoming_events = _safe_list(Event.objects.filter(event_date__gte=timezone.now().date()).order_by('event_date')[:3])
+    supporters = _safe_list(Supporter.objects.filter(is_active=True).order_by('order')[:10])
+    if not upcoming_events:
+        upcoming_events = _safe_list(Event.objects.all().order_by('event_date')[:3])
     context = {
         'banners': banners,
         'featured_programs': featured_programs,
@@ -42,6 +47,8 @@ def home_view(request):
         'featured_initiatives': featured_initiatives,
         'featured_stories': featured_stories,
         'vision_mission': vision_mission,
+        'upcoming_events': upcoming_events,
+        'supporters': supporters,
     }
     return render(request, 'core/home.html', context)
 

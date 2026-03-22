@@ -3,7 +3,7 @@ from .models import (
     Program, Project, BlogPost, MediaGallery, Statistic, ContactMessage, Event,
     Banner, VisionMission, Initiative, Story, CoreValue, TeamMember,
     ImageGallery, VideoGallery, PressRelease, MediaCoverage, ProjectImage,
-    OurStory, MediaContact
+    OurStory, MediaContact, Supporter
 )
 from .serializers import (
     ProgramSerializer, ProjectSerializer, BlogPostSerializer, MediaGallerySerializer,
@@ -11,7 +11,7 @@ from .serializers import (
     BannerSerializer, VisionMissionSerializer, InitiativeSerializer, StorySerializer,
     CoreValueSerializer, TeamMemberSerializer, ImageGallerySerializer, VideoGallerySerializer,
     PressReleaseSerializer, MediaCoverageSerializer, ProjectImageSerializer,
-    OurStorySerializer, MediaContactSerializer
+    OurStorySerializer, MediaContactSerializer, SupporterSerializer
 )
 
 
@@ -148,5 +148,11 @@ class MediaCoverageViewSet(viewsets.ModelViewSet):
 class MediaContactViewSet(viewsets.ModelViewSet):
     queryset = MediaContact.objects.all().order_by('-is_active', 'name')
     serializer_class = MediaContactSerializer
+    permission_classes = [AdminOrEditorWritePermission]
+
+
+class SupporterViewSet(viewsets.ModelViewSet):
+    queryset = Supporter.objects.all().order_by('order', 'name')
+    serializer_class = SupporterSerializer
     permission_classes = [AdminOrEditorWritePermission]
 

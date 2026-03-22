@@ -79,11 +79,56 @@
 </section>
 {% endif %}
 
+{% if upcoming_events %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5"><h2 class="fw-bold display-6 mt-1">Latest News and Events</h2></div>
+        <div class="row g-4">
+            {% for event in upcoming_events %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if event.image %}
+                    <img src="{{ event.image.url }}" class="card-img-top" style="height:200px;object-fit:cover;" alt="{{ event.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="fw-bold">{{ event.title }}</h5>
+                        <p class="small text-muted mb-2">{{ event.event_date }}{% if event.location %} · {{ event.location }}{% endif %}</p>
+                        <p class="text-muted mb-0">{{ event.description|truncatewords:22 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4"><a href="{% url 'get_involved' %}" class="btn btn-outline-primary px-4">Join Our Events</a></div>
+    </div>
+</section>
+{% endif %}
+
 {% if featured_stories %}
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5"><h2 class="fw-bold display-6 mt-1">Success Stories</h2></div>
         <div class="row g-4">{% for story in featured_stories %}<div class="col-md-6"><div class="card h-100 border-0 shadow-sm p-3"><div class="d-flex gap-3">{% if story.image %}<img src="{{ story.image.url }}" style="width:92px;height:92px;object-fit:cover;" class="rounded-circle" alt="{{ story.beneficiary_name }}">{% else %}<div class="rounded-circle bg-danger bg-opacity-10 d-flex align-items-center justify-content-center" style="width:92px;height:92px;"><i class="bi bi-person-heart fs-2 text-danger"></i></div>{% endif %}<div><h5 class="fw-bold mb-0">{{ story.beneficiary_name }}</h5><small class="text-muted">{{ story.location }}</small><p class="text-muted small mt-2 mb-0">{{ story.story_text|truncatewords:35 }}</p></div></div></div></div>{% endfor %}</div>
+    </div>
+</section>
+{% endif %}
+
+{% if supporters %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5"><h2 class="fw-bold display-6 mt-1">Partners and Supporters</h2></div>
+        <div class="row g-4 justify-content-center">
+            {% for supporter in supporters %}
+            <div class="col-6 col-md-3 col-lg-2">
+                <div class="card h-100 border-0 shadow-sm text-center p-3">
+                    {% if supporter.logo %}
+                    <img src="{{ supporter.logo.url }}" alt="{{ supporter.name }}" class="img-fluid mx-auto mb-2" style="height:52px;object-fit:contain;">
+                    {% endif %}
+                    <p class="small fw-semibold mb-0">{{ supporter.name }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% endif %}

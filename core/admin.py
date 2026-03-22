@@ -3,7 +3,7 @@ from .models import (
     Program, Project, BlogPost, MediaGallery, Statistic, ContactMessage, Event,
     Banner, VisionMission, Initiative, Story, CoreValue, TeamMember,
     ImageGallery, VideoGallery, PressRelease, MediaCoverage, ProjectImage,
-    OurStory, MediaContact
+    OurStory, MediaContact, Supporter
 )
 
 
@@ -155,3 +155,11 @@ class MediaContactAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     search_fields = ('name', 'designation', 'email', 'phone')
     list_editable = ('is_active',)
+
+
+@admin.register(Supporter)
+class SupporterAdmin(admin.ModelAdmin):
+    list_display = ('name', 'order', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('name',)
+    list_editable = ('order', 'is_active')

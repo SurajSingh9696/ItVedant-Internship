@@ -44,6 +44,7 @@ class Project(models.Model):
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
     report = models.FileField(upload_to='reports/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -332,6 +333,7 @@ class PressRelease(models.Model):
     published_date = models.DateField()
     is_featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -377,4 +379,19 @@ class MediaContact(models.Model):
 
     class Meta:
         ordering = ['-is_active', 'name']
+
+
+class Supporter(models.Model):
+    name = models.CharField(max_length=150)
+    logo = models.ImageField(upload_to='supporters/', blank=True, null=True)
+    website = models.URLField(blank=True)
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order', 'name']
 

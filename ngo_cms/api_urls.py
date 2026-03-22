@@ -7,7 +7,7 @@ from core.api import (
     BannerViewSet, VisionMissionViewSet, InitiativeViewSet, StoryViewSet,
     CoreValueViewSet, TeamMemberViewSet, ImageGalleryViewSet, VideoGalleryViewSet,
     PressReleaseViewSet, MediaCoverageViewSet, ProjectImageViewSet,
-    OurStoryViewSet, MediaContactViewSet
+    OurStoryViewSet, MediaContactViewSet, SupporterViewSet
 )
 from donations.api import DonationViewSet
 from volunteers.api import VolunteerViewSet, NewsletterSubscriberViewSet
@@ -37,6 +37,7 @@ router.register('video-gallery', VideoGalleryViewSet, basename='api-video-galler
 router.register('press-releases', PressReleaseViewSet, basename='api-press-releases')
 router.register('media-coverage', MediaCoverageViewSet, basename='api-media-coverage')
 router.register('media-contacts', MediaContactViewSet, basename='api-media-contacts')
+router.register('supporters', SupporterViewSet, basename='api-supporters')
 
 urlpatterns = [
     path('', include(router.urls)),

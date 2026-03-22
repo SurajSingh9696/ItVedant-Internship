@@ -3,7 +3,7 @@ from .models import (
     Program, Project, BlogPost, MediaGallery, Statistic, ContactMessage, Event,
     Banner, VisionMission, Initiative, Story, CoreValue, TeamMember,
     ImageGallery, VideoGallery, PressRelease, MediaCoverage, ProjectImage,
-    OurStory, MediaContact
+    OurStory, MediaContact, Supporter
 )
 
 
@@ -136,4 +136,11 @@ class MediaContactSerializer(serializers.ModelSerializer):
         model = MediaContact
         fields = '__all__'
         read_only_fields = ['updated_at']
+
+
+class SupporterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Supporter
+        fields = '__all__'
+        read_only_fields = ['created_at']
 
